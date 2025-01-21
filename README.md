@@ -47,3 +47,47 @@ Example of `terraform.tfvars`:
 bucketname = "my-static-website-bucket-2025-01-20"
 folder_name = "Applight" 
 ```
+### Steps to Deploy the Static Website
+**1. Initialize Terraform:** Initialize the Terraform configuration to download necessary providers and set up the working environment.
+
+  ```bash
+  terraform init 
+  ```
+
+**2. Review the Plan:** Before applying changes, you can review the Terraform plan, which shows the resources that will be created, modified, or destroyed.
+
+  ```bash
+  terraform plan 
+  ```
+
+**3. Apply the Configuration:** After reviewing the plan, apply the configuration to create the S3 bucket and upload the website files.
+
+  ```bash
+  terraform apply
+  ```
+
+### Access the Website
+
+Once the resources provisioned you will have the following output and you can also verify the resources on AWS console.
+
+  ```bash
+  Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+s3_website_url = "http://<bucket-name>.s3-website-<region>.amazonaws.com"
+  ```
+
+### Cleaning Up
+
+To remove the deployed resources and clean up, run:
+```bash
+terraform destroy
+  ```
+
+### Notes
+
+- The S3 bucket’s ACL is set to `public-read`, meaning all files within the bucket are publicly accessible.
+- The S3 Object resource uploads all files from the specified `folder_name` directory and infers the content type based on the file extension.
+- The S3 Website Configuration specifies `index.html` as the default document for the website.
+- Ensure that your S3 bucket name is `globally` unique.
